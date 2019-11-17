@@ -4,7 +4,7 @@ import { createElement } from './helpers.js';
 
 // <form action="#" method="get">
 // <input type="search" id="search-input" class="search-input" placeholder="Search...">
-// <input type="submit" value="&#x1F50D;" id="search-submit" class="search-submit">
+// <input type="submit" value="	&#x1F50D;" id="search-submit" class="search-submit">
 // </form>
 
 export function generateForm() {
@@ -23,7 +23,7 @@ export function generateForm() {
         { attribute: "type", value: "submit" },
         { attribute: "id", value: "search-submit" },
         { attribute: "class", value: "search-submit" },
-        { attribute: "value", value: "&#x1F50D" }
+        { attribute: "value", value: "🔍" }
 
     ]);
 
@@ -31,7 +31,7 @@ export function generateForm() {
     form.append(input1, input2);
 
     // Add listener and handler
-    form.addEventListener('submit', someFunction);
+    form.addEventListener('submit', () => console.log('The submit listener fired.') );
 
     // Append form to DOM
     document.getElementById('search-container').append(form);
