@@ -13,7 +13,10 @@ import { createElement } from './helpers.js';
 //     </div>
 // </div> 
 
-export function generateCard() {
+export function generateCard(result) {
+    // Deconstruct some variables
+    const { name, location, email, dob, phone, picture } = result;
+
     // Create the elements
     const cardDiv = createElement('div', null, [
         { attribute: 'class', value: 'card' }
@@ -26,17 +29,17 @@ export function generateCard() {
     ]);
     const image =  createElement('img', null, [
         { attribute: "class", value: "card-img" },
-        { attribute: "src", value: "https://placeholder.it/90x90" },
+        { attribute: "src", value: picture.large },
         { attribute: "alt", value: "profile picture" }
     ]);
-    const heading =  createElement('h3',`first last`, [
+    const heading =  createElement('h3',`${name.first} ${name.last}`, [
         { attribute: "id", value: "name" },
         { attribute: "class", value: "card-name cap" }
     ]);
-    const cardEmailP =  createElement('p', `email`, [
+    const cardEmailP =  createElement('p', email, [
         { attribute: "class", value: "card-text" }
     ]);
-    const cardAddressP =  createElement('p', `city, state`, [
+    const cardAddressP =  createElement('p', `${location.city}, ${location.state}`, [
         { attribute: "class", value: "card-text cap" }
     ]);
 
