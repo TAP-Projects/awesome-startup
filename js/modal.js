@@ -2,32 +2,14 @@
 
 import { createElement } from './helpers.js';
 
-// <div class="modal">
-//     <button type="button" id="modal-close-btn" class="modal-close-btn"><strong>X</strong></button>
-//     <div class="modal-info-container">
-//         <img class="modal-img" src="https://placehold.it/125x125" alt="profile picture">
-//         <h3 id="name" class="modal-name cap">name</h3>
-//         <p class="modal-text">email</p>
-//         <p class="modal-text cap">city</p>
-//         <hr>
-//         <p class="modal-text">(555) 555-5555</p>
-//         <p class="modal-text">123 Portland Ave., Portland, OR 97204</p>
-//         <p class="modal-text">Birthday: 10/21/2015</p>
-//     </div>
-// </div>
-// <div class="modal-btn-container">
-//     <button type="button" id="modal-prev" class="modal-prev btn">Prev</button>
-//     <button type="button" id="modal-next" class="modal-next btn">Next</button>
-// </div>
-
-
 export function generateModal() {
+    // Deconstruct some variables
     // Create the elements
     // NOTE: The indentation is deliberate. It's tracking what is inserted into what
     const modalDiv = createElement('div', null, [
-        { attribute: 'class', value: 'modal-container' }
+        { attribute: 'class', value: 'modal' }
     ]);
-        const button = createElement('button', `<strong>X</strong>`, [
+        const button = createElement('button', `X`, [
             { attribute: "id", value: "modal-close-button" },
             { attribute: "class", value: "modal-close-button" },
             { attribute: "type", value: "button" }
@@ -36,6 +18,7 @@ export function generateModal() {
             { attribute: "class", value: "modal-info-container" }
         ]);
             const image =  createElement('img', null, [
+                { attribute: "id", value: "modal-img" },
                 { attribute: "class", value: "modal-img" },
                 { attribute: "src", value: "https://placeholder.it/125x125" },
                 { attribute: "alt", value: "profile picture" }
@@ -45,19 +28,24 @@ export function generateModal() {
                 { attribute: "class", value: "modal-name cap" }
             ]);
             const modalEmailP =  createElement('p', `email`, [
+                { attribute: "id", value: "modal-email" },
                 { attribute: "class", value: "modal-text" }
             ]);
             const modalCityP =  createElement('p', `city`, [
+                { attribute: "id", value: "modal-city" },
                 { attribute: "class", value: "modal-text cap" }
             ]);
             const rule = createElement('hr')
             const modalTelP =  createElement('p', `tel`, [
+                { attribute: "id", value: "modal-tel" },
                 { attribute: "class", value: "modal-text" }
             ]);
             const modalFullAddressP =  createElement('p', `address`, [
+                { attribute: "id", value: "modal-address" },
                 { attribute: "class", value: "modal-text" }
             ]);
             const modalBirthdayP =  createElement('p', `birthdate`, [
+                { attribute: "id", value: "modal-dob" },
                 { attribute: "class", value: "modal-text" }
             ]);
     const modalPrevNextDiv = createElement('div', null, [
