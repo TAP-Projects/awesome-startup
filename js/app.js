@@ -60,18 +60,28 @@ function fetchProfiles() {
         const theEmail = this.lastElementChild.children[1].textContent;
         // The matching profile in data, matched on email address
         const theProfile = data.filter(item => item.email === theEmail);
-        console.log("Here's the profile from inside the card handler: ", theProfile);
-        //!NOTE: Handling errors? No match?
+
+        // NOTE: We don't need to test for the profile's existence, because we already know that it exists. We know that because we used it to build the card
+
         // Deconstruct some variables
         const { name, location, email, dob, phone, picture } = theProfile[0];
-        modalImg.src = picture.large;
-        modalName.textContent = name.first + " " + name.last;
+        const { street, city, state, postcode } = location;
+
+        // Insert new profile details, after ensuring the detail is present
+        modalImg.src = picture.large ? picture.large : '../images/no-image-available.png';
+        modalName.textContent = name.first && name.last ? name.first + " " + name.last : name.first || name.last;
         modalEmail.textContent = email;
-        modalCity.textContent = location.city.toUpperCase();
-        modalTel.textContent = phone;
-        modalAddress.textContent = `${location.street}, ${location.city}, ${location.state} ${location.zip}`;
-        const DOB = new Date(dob);
-        modalDOB.textContent = `Birthday: ${DOB.getDate()} / ${DOB.getMonth()} / ${DOB.getFullYear}`
+        modalCity.textContent = city ? city : '';
+        modalTel.textContent = phone ? phone : '';
+        // Build the full address string
+        let Address = '';
+        if(street.number && street.name) Address += (street.number + ' ' + street.name);
+        if(city) Address += (', ' + city);
+        if(state) Address +=  (', ' + state);
+        if(postcode) Address += (' ' + postcode);
+        modalAddress.textContent = Address;
+        const DOB = new Date(dob.date);
+        modalDOB.textContent = `Birthday: ${DOB.getMonth()} / ${DOB.getDate()} / ${DOB.getFullYear()}`;
 
         // Show modal
         document.getElementById('modal-container').setAttribute('style', 'display:fixed');

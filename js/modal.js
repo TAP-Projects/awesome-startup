@@ -11,7 +11,7 @@ export function generateModal() {
     ]);
         const button = createElement('button', `X`, [
             { attribute: "id", value: "modal-close-button" },
-            { attribute: "class", value: "modal-close-button" },
+            { attribute: "class", value: "modal-close-btn" },
             { attribute: "type", value: "button" }
         ]);
         const modalInfoDiv = createElement('div', null, [
@@ -71,7 +71,7 @@ export function generateModal() {
 
     // Add listener and handler
     // This handler will handle the close, previous, and next events
-    modalDiv.addEventListener('click', () => console.log('The modal click handler fired.') );
+    modalDiv.addEventListener('click', function(){console.log(this.parentElement);this.parentElement.style.display = 'none'} );
 
     // Append card to DOM
     document.getElementById('modal-container').append(modalDiv, modalPrevNextDiv);
