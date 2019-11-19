@@ -31,7 +31,12 @@ export function generateForm() {
     form.append(input1, input2);
 
     // Add listener and handler
-    form.addEventListener('submit', () => console.log('The submit listener fired.') );
+    form.addEventListener('submit', function(){
+        console.log(this.previousSibling.value);
+        if(this.previousSibling.value.length > 0){
+            // recursively join all of the fields in each record to create a string
+        }
+    });
 
     // Append form to DOM
     document.getElementById('search-container').append(form);
