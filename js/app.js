@@ -1,3 +1,4 @@
+import { fetchData } from "./helpers.js";
 import { generateForm } from "./search.js";
 import { generateCard } from "./card.js";
 import { generateModal } from "./modal.js";
@@ -24,23 +25,9 @@ modalContainer.setAttribute("style", "display:none");
 // Get ready for the profiles
 let data;
 
-// Get the profile data, generate and append the profile cards
-fetchProfiles();
-
 // Fetch the profiles and display them when the data arrives
-function fetchProfiles() {
-	//!NOTE: Handling all errors? Connection? No match for query?
-	// Fetch profiles
-	fetch(
-		"https://randomuser.me/api/1.3/?format=json&results=12&nat=us&exc=login,registered"
-	)
-		// Parse response
-		.then(res => res.json())
-		// Display profiles
-		.then(displayProfiles)
-		// Catch any errors
-		.catch(err => console.log("Error fetching profiles", err));
-}
+fetchData("https://randomuser.me/api/1.3/?format=json&results=12&nat=us&exc=login,registered")
+	.then(displayProfiles);
 
 // Display profiles
 function displayProfiles(json) {
