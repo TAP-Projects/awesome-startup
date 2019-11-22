@@ -15,3 +15,6 @@ Here's the flow:
         --- If populateModal receives an object, it populates the modal with the data contained in the object and then displays the modal
             ---- addModalData()
         --- If populateModal receives a string, it uses the string to filter on the 'data' object that contains the profile data, returning only the profile object that has the matching email. It then uses that object to populate the modal and display it.
+
+- When the user keys up from the search input or clicks on submit
+    - The query term is matched against the data object and a new subset of data is displayed using displayProfiles()

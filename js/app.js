@@ -2,6 +2,7 @@ import { fetchData } from "./helpers.js";
 import { generateForm } from "./search.js";
 import { generateCard } from "./card.js";
 import { generateModal } from "./modal.js";
+import { populateModal } from './modal.js';
 
 // Generate the search form
 generateForm();
@@ -10,18 +11,20 @@ generateForm();
 generateModal();
 
 // Get reference to modal bits
-const modalContainer = document.getElementById("modal-container");
-const modalDiv = document.getElementById("modal-div")
-const modalImg = document.getElementById("modal-img");
-const modalName = document.getElementById("modal-name");
-const modalEmail = document.getElementById("modal-email");
-const modalCity = document.getElementById("modal-city");
-const modalTel = document.getElementById("modal-tel");
-const modalAddress = document.getElementById("modal-address");
-const modalDOB = document.getElementById("modal-dob");
+export const modalDOM = {
+	modalContainer: document.getElementById("modal-container"),
+	modalDiv: document.getElementById("modal-div"),
+	modalImg: document.getElementById("modal-img"),
+	modalName: document.getElementById("modal-name"),
+	modalEmail: document.getElementById("modal-email"),
+	modalCity: document.getElementById("modal-city"),
+	modalTel: document.getElementById("modal-tel"),
+	modalAddress: document.getElementById("modal-address"),
+	modalDOB: document.getElementById("modal-dob")
+}
 
 // Hide the modal container
-modalContainer.setAttribute("style", "display:none");
+modalDOM.modalContainer.setAttribute("style", "display:none");
 
 // Get ready for the profiles
 export let data;
@@ -45,45 +48,7 @@ function displayProfiles(json) {
 		theCard.addEventListener("click", e => populateModal(e, result));
 		return result;
 	});
-	console.log(data)
+	
 }
 
-// On card click, populate the modal and show it
-export function populateModal(e, result) {
-	// Deconstruct some variables
-	const { index, name, location, email, dob, phone, picture } =
-		result;
-	const { street, city, state, postcode } = location;
 
-	// Insert new profile details, after ensuring the detail is present
-	function addModalData() {
-		modalDiv.dataset.index = index;
-		modalImg.src = picture.large
-			? picture.large
-			: "../images/no-image-available.png";
-		modalName.textContent =
-			name.first && name.last
-				? name.first + " " + name.last
-				: name.first || name.last;
-		modalEmail.textContent = email;
-		modalCity.textContent = city ? city : "";
-		modalTel.textContent = phone ? phone : "";
-		// Build the full address string
-		let Address = "";
-		if (street.number && street.name)
-			Address += street.number + " " + street.name;
-		if (city) Address += ", " + city;
-		if (state) Address += ", " + state;
-		if (postcode) Address += " " + postcode;
-		modalAddress.textContent = Address;
-		const DOB = new Date(dob.date);
-		modalDOB.textContent = `Birthday: ${DOB.getMonth()} / ${DOB.getDate()} / ${DOB.getFullYear()}`;
-	}
-
-	addModalData();
-
-	// Show modal
-	document
-		.getElementById("modal-container")
-		.setAttribute("style", "display:fixed");
-}

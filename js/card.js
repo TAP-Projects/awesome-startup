@@ -2,11 +2,15 @@
 
 import { createElement } from './helpers.js';
 
+
 export function generateCard(result, index) {
     // Deconstruct some variables
     const { name, location, email, dob, phone, picture } = result;
-
-    // Create the elements
+    
+    //-------------------
+    // CREATE ELEMENTS --
+    //-------------------
+    
     const cardDiv = createElement('div', null, [
         { attribute: 'class', value: 'card' }
     ]);
@@ -31,6 +35,10 @@ export function generateCard(result, index) {
     const cardAddressP =  createElement('p', `${location.city}, ${location.state}`, [
         { attribute: "class", value: "card-text cap" }
     ]);
+
+    //-------------------
+	// APPEND ELEMENTS --
+	//-------------------
 
     // Append image and text areas to card
     cardDiv.append(cardImgDiv, cardInfoDiv);
