@@ -1,6 +1,7 @@
 // The modal markup and functionality
 
 import { createElement } from './helpers.js';
+import { populateModal } from './app.js';
 
 export function generateModal() {
     // Deconstruct some variables
@@ -71,7 +72,32 @@ export function generateModal() {
 
     // Add listener and handler
     // This handler will handle the close, previous, and next events
-    modalDiv.addEventListener('click', function(){console.log(this.parentElement);this.parentElement.style.display = 'none'} );
+    document.getElementById('modal-container').addEventListener('click', function(e){
+        
+        // If the click was on the close button...
+        if(e.target.id === 'modal-close-button'){
+            // 'close' the modal
+            this.style.display = 'none';
+            // and exit the function
+            return;
+        }
+
+        // Get the email from the currently showing profile
+        const currentEmail = this.firstElementChild.children[1].children[2].textContent;
+        // Get the card gallery
+        const gallery = document.getElementById('gallery');
+        let newProfile;
+        // If the previous button was click
+        if(e.target.id === 'modal-prev'){
+            // Use the position of the old profile's card to find its previous sibling
+            newProfile = gallery.querySelector(`[data-email="${currentEmail}"]`).previousElementSibling.getAttribute('data-email');
+            console.log("The new profile is: ", newProfile)
+        } else if(e.target.id === 'modal-next'){
+            
+        }
+        populateModal(e, newProfile)
+        
+    } );
 
     // Append card to DOM
     document.getElementById('modal-container').append(modalDiv, modalPrevNextDiv);

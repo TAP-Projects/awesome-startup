@@ -1,12 +1,6 @@
 // The search markup and functionality
 import { createElement } from './helpers.js';
 
-
-// <form action="#" method="get">
-// <input type="search" id="search-input" class="search-input" placeholder="Search...">
-// <input type="submit" value="	&#x1F50D;" id="search-submit" class="search-submit">
-// </form>
-
 export function generateForm() {
     // Create the elements
     const form = createElement('form', null, [
@@ -31,11 +25,11 @@ export function generateForm() {
     form.append(input1, input2);
 
     // Add listener and handler
-    form.addEventListener('submit', function(){
-        console.log(this.previousSibling.value);
-        if(this.previousSibling.value.length > 0){
+    form.addEventListener('submit', function(e){
+        e.preventDefault();
+        if(e.target.children[0].value.length > 0){
             // recursively join all of the fields in each record to create a string
-        }
+        } 
     });
 
     // Append form to DOM

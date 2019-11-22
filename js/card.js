@@ -8,7 +8,8 @@ export function generateCard(result) {
 
     // Create the elements
     const cardDiv = createElement('div', null, [
-        { attribute: 'class', value: 'card' }
+        { attribute: 'class', value: 'card' },
+        { attribute: "data-email", value: email }
     ]);
     const cardImgDiv = createElement('div', null, [
         { attribute: "class", value: "card-image-container" }
