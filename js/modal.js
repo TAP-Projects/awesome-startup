@@ -1,5 +1,5 @@
 // The modal markup and functionality
-
+import { data } from './app.js';
 import { createElement } from './helpers.js';
 import { populateModal } from './app.js';
 
@@ -11,7 +11,9 @@ export function generateModal() {
 
     // NOTE: The indentation is deliberate.
     const modalDiv = createElement('div', null, [
-        { attribute: 'class', value: 'modal' }
+        { attribute: 'id', value: 'modal-div' },
+        { attribute: 'class', value: 'modal' },
+        { attribute: 'data-index', value: '' }
     ]);
         const button = createElement('button', `X`, [
             { attribute: "id", value: "modal-close-button" },
@@ -94,16 +96,16 @@ export function generateModal() {
         //!GOAL: pass an actual profile object to populate modal
         // I can access 'data' because it's in the global scope
 
-        // Get the email from the currently showing profile
-        const currentEmail = this.firstElementChild.children[1].children[2].textContent;
+        // Get the current profile's index
+        const profileIndex = parseInt(document.getElementById("modal-div").dataset.index, 10)
         let newProfile;
         // If the previous button was clicked
         if(e.target.id === 'modal-prev'){
-            // Use the position of the current profile object to find the one before it. Remember that the data object is in the global scope.
-            newProfile = data[]
+            // Use the position of the current profile object to find the one before it. 
+            newProfile = data[profileIndex - 1];
             console.log("The new profile is: ", newProfile)
         } else if(e.target.id === 'modal-next'){
-            newProfile = data[]
+            newProfile = data[profileIndex + 1];
         }
         populateModal(e, newProfile)
         
