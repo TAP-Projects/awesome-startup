@@ -2,14 +2,13 @@
 
 import { createElement } from './helpers.js';
 
-export function generateCard(result) {
+export function generateCard(result, index) {
     // Deconstruct some variables
     const { name, location, email, dob, phone, picture } = result;
 
     // Create the elements
     const cardDiv = createElement('div', null, [
-        { attribute: 'class', value: 'card' },
-        { attribute: "data-email", value: email }
+        { attribute: 'class', value: 'card' }
     ]);
     const cardImgDiv = createElement('div', null, [
         { attribute: "class", value: "card-image-container" }

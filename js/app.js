@@ -34,7 +34,9 @@ function displayProfiles(json) {
 	// Set data to parsed results
 	data = json.results;
 	// Loop over the data and generate cards and attach listeners/handlers
-	data.forEach(result => {
+	data = data.map((result,index) => {
+		// Create an index entry for each profile object
+		result.index = index;
 		// Generate the card
 		const theCard = generateCard(result);
 		// On click, populate the modal. The modal itself is generated just once.
@@ -44,21 +46,14 @@ function displayProfiles(json) {
 }
 
 // On card click, populate the modal and show it
-export function populateModal(e, result, targetEmail) {
-
-	// When calling populateModal from displayProfiles, the full profile object will be passed into populateModal. However, when calling populateModal from the prev or next buttons, the result argument will be null, and an email will be passed in. This email is used to find the profile object that it corresponds to.
-	if(targetEmail){
-		// Filter the data for the profile with the targetEmail
-		const profile = data.filter((profile)=>{
-			return profile.email === targetEmail;
-		});
-	}
+export function populateModal(e, result) {
 
 	// Deconstruct some variables
 	const { name, location, email, dob, phone, picture } = result || profile;
 	const { street, city, state, postcode } = location;
 
 	// Insert new profile details, after ensuring the detail is present
+	function addModalData(){
 	modalImg.src = picture.large
 		? picture.large
 		: "../images/no-image-available.png";
@@ -79,6 +74,9 @@ export function populateModal(e, result, targetEmail) {
 	modalAddress.textContent = Address;
 	const DOB = new Date(dob.date);
 	modalDOB.textContent = `Birthday: ${DOB.getMonth()} / ${DOB.getDate()} / ${DOB.getFullYear()}`;
+	}
+
+	addModalData();
 
 	// Show modal
 	document

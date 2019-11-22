@@ -4,9 +4,12 @@ import { createElement } from './helpers.js';
 import { populateModal } from './app.js';
 
 export function generateModal() {
-    // Deconstruct some variables
-    // Create the elements
-    // NOTE: The indentation is deliberate. It's tracking what is inserted into what
+    
+    //-------------------
+    // CREATE ELEMENTS --
+    //-------------------
+
+    // NOTE: The indentation is deliberate.
     const modalDiv = createElement('div', null, [
         { attribute: 'class', value: 'modal' }
     ]);
@@ -63,6 +66,10 @@ export function generateModal() {
             { attribute: "type", value: "button" }
         ]);
 
+    //-------------------
+    // APPEND ELEMENTS --
+    //-------------------
+
     // Append image and text areas to card
     modalDiv.append(button, modalInfoDiv);
     // Append header, email, and address to text container
@@ -70,9 +77,11 @@ export function generateModal() {
     // Append previous and next buttons to button container
     modalPrevNextDiv.append(prev, next)
 
-    // Add listener and handler
-    // This handler will handle the close, previous, and next events
-    document.getElementById('modal-container').addEventListener('click', function(e){
+    //------------------
+    // DEFINE HANDLER --
+    //------------------
+
+    function handleModalClick(e){
         
         // If the click was on the close button...
         if(e.target.id === 'modal-close-button'){
@@ -82,22 +91,30 @@ export function generateModal() {
             return;
         }
 
+        //!GOAL: pass an actual profile object to populate modal
+        // I can access 'data' because it's in the global scope
+
         // Get the email from the currently showing profile
         const currentEmail = this.firstElementChild.children[1].children[2].textContent;
-        // Get the card gallery
-        const gallery = document.getElementById('gallery');
         let newProfile;
-        // If the previous button was click
+        // If the previous button was clicked
         if(e.target.id === 'modal-prev'){
-            // Use the position of the old profile's card to find its previous sibling
-            newProfile = gallery.querySelector(`[data-email="${currentEmail}"]`).previousElementSibling.getAttribute('data-email');
+            // Use the position of the current profile object to find the one before it. Remember that the data object is in the global scope.
+            newProfile = data[]
             console.log("The new profile is: ", newProfile)
         } else if(e.target.id === 'modal-next'){
-            
+            newProfile = data[]
         }
         populateModal(e, newProfile)
         
-    } );
+    } 
+
+    //----------------
+    // ADD LISTENER --
+    //----------------
+
+    // This handler will handle the close, previous, and next events
+    document.getElementById('modal-container').addEventListener('click', handleModalClick);
 
     // Append card to DOM
     document.getElementById('modal-container').append(modalDiv, modalPrevNextDiv);
