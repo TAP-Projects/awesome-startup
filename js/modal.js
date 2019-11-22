@@ -93,19 +93,20 @@ export function generateModal() {
             return;
         }
 
-        //!GOAL: pass an actual profile object to populate modal
-        // I can access 'data' because it's in the global scope
+        //!GOAL: The previous and next buttons now work, but it would be awesome if when you get to the end of the list, it cycled around to the beginning again
+
+        //?NOTE: Should the populateModal function appear here?
 
         // Get the current profile's index
         const profileIndex = parseInt(document.getElementById("modal-div").dataset.index, 10)
+        // Declare a new profile variable
         let newProfile;
-        // If the previous button was clicked
+        // If the prev or next buttons was clicked, use the position of the current profile object to find the one before or after it. The ternary operators prevents errors when attempting to access non-existent indices, and in effect wraps the list. The previous profile from the 1st profile is the last profile. The next profile from the last profile is the first profile. 
         if(e.target.id === 'modal-prev'){
-            // Use the position of the current profile object to find the one before it. 
-            newProfile = data[profileIndex - 1];
+            newProfile = data[profileIndex - 1] ? data[profileIndex - 1] : data[data.length-1];
             console.log("The new profile is: ", newProfile)
         } else if(e.target.id === 'modal-next'){
-            newProfile = data[profileIndex + 1];
+            newProfile = data[profileIndex + 1] ? data[profileIndex + 1] : data[0];
         }
         populateModal(e, newProfile)
         
