@@ -1,5 +1,6 @@
 // The search markup and functionality
 import { createElement } from './helpers.js';
+import { data, displayProfiles } from './app.js';
 
 export function generateForm() {
     // Create the elements
@@ -26,10 +27,20 @@ export function generateForm() {
 
     // Add listener and handler
     form.addEventListener('submit', function(e){
+        // Prevent form submission
         e.preventDefault();
-        if(e.target.children[0].value.length > 0){
-            // recursively join all of the fields in each record to create a string
+        // Get the query string
+        const query = e.target.firstElementChild.value
+        // Get ready for results
+        let matches = {results: null};
+        // If there's a query string
+        if(query.length > 0){
+            // Search the data object for the query and return all of the matches
+            // The .results property is to accommodate displayProfiles()
+            matches.results = data.filter( item => Object.values(item).filter( prop => query === prop));
+            // Cheaper to just recreate the cards than to try to hide the non-matches
         } 
+        displayProfiles(matches);
     });
 
     // Append form to DOM

@@ -1,6 +1,5 @@
 // The modal markup and functionality
-import { data } from "./app.js";
-import { modalDOM } from "./app.js";
+import { data, modalDOM } from "./app.js";
 import { createElement } from "./helpers.js";
 
 export function generateModal() {

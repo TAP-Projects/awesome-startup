@@ -1,8 +1,7 @@
 import { fetchData } from "./helpers.js";
 import { generateForm } from "./search.js";
 import { generateCard } from "./card.js";
-import { generateModal } from "./modal.js";
-import { populateModal } from './modal.js';
+import { generateModal, populateModal } from "./modal.js";
 
 // Generate the search form
 generateForm();
@@ -35,7 +34,7 @@ fetchData(
 ).then(displayProfiles);
 
 // Display profiles
-function displayProfiles(json) {
+export function displayProfiles(json) {
 	// Set data to parsed results
 	data = json.results;
 	// Loop over the data and generate cards and attach listeners/handlers
