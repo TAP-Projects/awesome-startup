@@ -31,22 +31,31 @@ export let data;
 // Fetch the profiles and display them when the data arrives
 fetchData(
 	"https://randomuser.me/api/1.3/?format=json&results=12&nat=us&exc=login,registered"
-).then(displayProfiles);
+)
+	.then(indexData)
+	.then(displayProfiles);
 
-// Display profiles
-export function displayProfiles(json) {
+// Index data
+function indexData(json){
 	// Set data to parsed results
 	data = json.results;
+	// And add an index
+	data.forEach((profile, index)=>profile.index = index);
+	console.log("Indexed data", data)
+	return data;
+}
+
+// Display profiles
+export function displayProfiles(data) {
 	// Loop over the data and generate cards and attach listeners/handlers
-	data = data.map((result, index) => {
-		// Create an index entry for each profile object
-		result.index = index;
+	data.forEach(result => {
 		// Generate the card
 		const theCard = generateCard(result);
 		// On click, populate the modal. The modal itself is generated just once.
 		theCard.addEventListener("click", e => populateModal(e, result));
-		return result;
+		//return result;
 	});
+	console.log("The data after displayProfiles", data)
 	
 }
 

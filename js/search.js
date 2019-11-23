@@ -31,13 +31,23 @@ export function generateForm() {
         e.preventDefault();
         // Get the query string
         const query = e.target.firstElementChild.value
+        console.log("The query is: ", query);
         // Get ready for results
-        let matches = {results: null};
+        let matches;
         // If there's a query string
         if(query.length > 0){
-            // Search the data object for the query and return all of the matches
-            // The .results property is to accommodate displayProfiles()
-            matches.results = data.filter( item => Object.values(item).filter( prop => query === prop));
+            // Map the array of profile objects for just those profiles that contain the query string
+            matches = data.map( profile => {
+                // Get the profile object's values
+                const valuesArr = Object.values(profile);
+                // Filter the values, such that if a value contains the query string, we return its profile object
+                for(let i = 0; i < valuesArr.length; i++){
+                    if(String(valuesArr[i]).includes(query)){
+                        return profile;
+                    }
+                }
+            });
+            console.log("matches is: ", matches);
             // Cheaper to just recreate the cards than to try to hide the non-matches
         } 
         displayProfiles(matches);
