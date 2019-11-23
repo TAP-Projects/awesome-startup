@@ -71,7 +71,9 @@ export function generateModal() {
 	//-------------------
 
 	// Append image and text areas to card
-	modalDiv.append(button, modalInfoDiv);
+	modalDiv.append(button, modalInfoDiv, modalPrevNextDiv);
+	// Append previous and next buttons to button container
+	modalPrevNextDiv.append(prev, next);
 	// Append header, email, and address to text container
 	modalInfoDiv.append(
 		image,
@@ -83,8 +85,6 @@ export function generateModal() {
 		modalFullAddressP,
 		modalBirthdayP
 	);
-	// Append previous and next buttons to button container
-	modalPrevNextDiv.append(prev, next);
 
 	//------------------
 	// DEFINE HANDLER --
@@ -98,10 +98,6 @@ export function generateModal() {
 			// and exit the function
 			return;
 		}
-
-		//!GOAL: The previous and next buttons now work, but it would be awesome if when you get to the end of the list, it cycled around to the beginning again
-
-		//?NOTE: Should the populateModal function appear here?
 
 		// Get the current profile's index
 		const profileIndex = parseInt(
@@ -136,7 +132,7 @@ export function generateModal() {
 	// Append card to DOM
 	document
 		.getElementById("modal-container")
-		.append(modalDiv, modalPrevNextDiv);
+		.append(modalDiv);
 }
 
 // On card click, populate the modal and show it

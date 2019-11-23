@@ -27,8 +27,20 @@ export function generateForm() {
 
     // Add listener and handler
     form.addEventListener('submit', function(e){
+
         // Prevent form submission
         e.preventDefault();
+
+        //!NOTE: this is not working right now. I was trying to hide all of the results and then display the matching profiles if there was a query. If there was a submit with no query, the hidden cards would be shown again. The problem is that you have to remove the search results for that to work. Instead, we need to remove all of the cards, and then we just have to save the result of creating all of hte cards originally and then re-append that.
+
+        //!NOTE: Also, I should add a keyup listener with debounce to the search function
+
+        // Hide the cards
+        // .children returns a collection, hence the for loop below. I'm using it because I think it's faster than using querySelectorAll('.card');
+        const cards = document.getElementById('gallery').children;
+        for(let i=0; i<cards.length; i++){
+            cards[i].setAttribute('style', 'display:none');
+        }
         // Get the query string
         const query = e.target.firstElementChild.value.toLowerCase();
         console.log("The query is: ", query);
@@ -50,8 +62,12 @@ export function generateForm() {
             }).filter(profile=>profile)
             console.log("matches is: ", matches);
             // Cheaper to just recreate the cards than to try to hide the non-matches
-        } 
-        displayProfiles(matches);
+            displayProfiles(matches);
+        } else {
+            for(let i=0; i<cards.length; i++){
+                cards[i].setAttribute('style', 'display:flex');
+            }
+        }
     });
 
     // Append form to DOM
