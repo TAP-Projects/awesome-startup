@@ -177,5 +177,5 @@ export function populateModal(e, result) {
 	// Show modal
 	document
 		.getElementById("modal-container")
-		.setAttribute("style", "display:fixed");
+		.setAttribute("style", "display: block");
 }
