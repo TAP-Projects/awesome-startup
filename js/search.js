@@ -30,7 +30,7 @@ export function generateForm() {
         // Prevent form submission
         e.preventDefault();
         // Get the query string
-        const query = e.target.firstElementChild.value
+        const query = e.target.firstElementChild.value.toLowerCase();
         console.log("The query is: ", query);
         // Get ready for results
         let matches;
@@ -40,13 +40,14 @@ export function generateForm() {
             matches = data.map( profile => {
                 // Get the profile object's values
                 const valuesArr = Object.values(profile);
-                // Filter the values, such that if a value contains the query string, we return its profile object
-                for(let i = 0; i < valuesArr.length; i++){
+                // Loop over the values and if one contains the query, return its profile
+                for(let i=0; i< valuesArr.length; i++){
                     if(String(valuesArr[i]).includes(query)){
                         return profile;
                     }
+                    continue;
                 }
-            });
+            }).filter(profile=>profile)
             console.log("matches is: ", matches);
             // Cheaper to just recreate the cards than to try to hide the non-matches
         } 
