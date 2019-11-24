@@ -9,7 +9,7 @@ generateForm();
 // Generate the modal window
 generateModal();
 
-// Get reference to modal bits
+// Get references to modal elements in the DOM
 export const modalDOM = {
 	modalContainer: document.getElementById("modal-container"),
 	modalDiv: document.getElementById("modal-div"),
@@ -20,13 +20,15 @@ export const modalDOM = {
 	modalTel: document.getElementById("modal-tel"),
 	modalAddress: document.getElementById("modal-address"),
 	modalDOB: document.getElementById("modal-dob")
-}
+};
 
 // Hide the modal container
 modalDOM.modalContainer.setAttribute("style", "display:none");
 
-// Get ready for the profiles
+// data will hold the profile data - an array of profile objects
 export let data;
+// cardNodes will holds the card nodes created on the first call to displayProfile
+export const cardNodes = [];
 
 // Fetch the profiles and display them when the data arrives
 fetchData(
@@ -36,27 +38,23 @@ fetchData(
 	.then(displayProfiles);
 
 // Index data
-function indexData(json){
+function indexData(json) {
 	// Set data to parsed results
 	data = json.results;
 	// And add an index
-	data.forEach((profile, index)=>profile.index = index);
-	console.log("Indexed data", data)
+	data.forEach((profile, index) => (profile.index = index));
 	return data;
 }
 
 // Display profiles
+// displayProfile takes an array of profile objects and loop over it to generate profile cards, attaching a click listener to each. On click, we call populateModal, passing in the card, which we'll use to populate the modal.
 export function displayProfiles(data) {
-	// Loop over the data and generate cards and attach listeners/handlers
-	data.forEach(result => {
-		// Generate the card
-		const theCard = generateCard(result);
-		// On click, populate the modal. The modal itself is generated just once.
-		theCard.addEventListener("click", e => populateModal(e, result));
-		//return result;
+	data.forEach(card => {
+		const cardNode = generateCard(card);
+		cardNode.addEventListener("click", e => populateModal(e, card));
+		// We populate the cardNodes array just once on the initial call to displayProfiles
+		if (cardNodes.length < 12) cardNodes.push(cardNode);
 	});
-	console.log("The data after displayProfiles", data)
-	
+	console.log("The cardNodes array: ", cardNodes)
 }
-
-
+console.log("The cardNodes array, before the cards nodes are built: ", cardNodes)

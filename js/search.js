@@ -1,6 +1,6 @@
 // The search markup and functionality
 import { createElement } from './helpers.js';
-import { data, displayProfiles } from './app.js';
+import { data, cardNodes, displayProfiles } from './app.js';
 
 export function generateForm() {
     // Create the elements
@@ -22,50 +22,42 @@ export function generateForm() {
 
     ]);
 
-    // Append inputs to form
-    form.append(input1, input2);
-
-    // Add listener and handler
-    form.addEventListener('submit', function(e){
+    // Submit and keyup form handler
+    function handleForm(e){
 
         // Prevent form submission
         e.preventDefault();
 
-        //!NOTE: this is not working right now. I was trying to hide all of the results and then display the matching profiles if there was a query. If there was a submit with no query, the hidden cards would be shown again. The problem is that you have to remove the search results for that to work. Instead, we need to remove all of the cards, and then we just have to save the result of creating all of hte cards originally and then re-append that.
-
-        //!NOTE: Also, I should add a keyup listener with debounce to the search function
+        //!NOTE: I need to add debounce to the keyup listener
 
         // Remove all cards
-        const cards = document.getElementById('gallery').children.remove();
-        
+        //?QUESTION: Is there a less cpu intensive way to do this?
+        document.querySelectorAll('div.card').forEach(card => card.remove());
+
         // Get the query string
-        const query = e.target.firstElementChild.value.toLowerCase();
+        const query = document.getElementById('search-input').value.toLowerCase().trim();
         console.log("The query is: ", query);
+
         // Get ready for results
         let matches;
-        // If there's a query string
+        // If there's a query string, then map the data, returning profiles that include the query string
         if(query.length > 0){
-            // Map the array of profile objects for just those profiles that contain the query string
-            matches = data.map( profile => {
-                // Get the profile object's values
-                const valuesArr = Object.values(profile);
-                // Loop over the values and if one contains the query, return its profile
-                for(let i=0; i< valuesArr.length; i++){
-                    if(String(valuesArr[i]).includes(query)){
-                        return profile;
-                    }
-                    continue;
-                }
-            }).filter(profile=>profile)
+            matches = data.map( profile => Object.values(profile).join('').includes(query) ? profile : null );
             console.log("matches is: ", matches);
-            // Cheaper to just recreate the cards than to try to hide the non-matches
-            displayProfiles(matches);
+            // Display the valid matches, filtering out nulls. NOTE: It's easier to just recreate the cards than to try to hide the non-matches and then display them again
+            displayProfiles(matches.filter(match=>match));
         } else {
-            for(let i=0; i<cards.length; i++){
-                cards[i].setAttribute('style', 'display:flex');
-            }
+        // If submit is clicked when the query field is empty, re-append the saved card nodes. We're avoiding having to generate the code nodes a second time.
+            document.getElementById('gallery').append(...cardNodes);
         }
-    });
+    }
+
+    // Append inputs to form
+    form.append(input1, input2);
+
+    // Add listener and handler
+    form.addEventListener('submit', handleForm);
+    form.addEventListener('keyup', handleForm);
 
     // Append form to DOM
     document.getElementById('search-container').append(form);

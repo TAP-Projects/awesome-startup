@@ -4,6 +4,7 @@ import { createElement } from './helpers.js';
 
 
 export function generateCard(result, index) {
+    console.log(result);
     // Deconstruct some variables
     const { name, location, email, dob, phone, picture } = result;
     

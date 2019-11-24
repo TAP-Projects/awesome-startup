@@ -24,7 +24,7 @@ export function generateModal() {
 	const image = createElement("img", null, [
 		{ attribute: "id", value: "modal-img" },
 		{ attribute: "class", value: "modal-img" },
-		{ attribute: "src", value: "https://placeholder.it/125x125" },
+		{ attribute: "src", value: "" },
 		{ attribute: "alt", value: "profile picture" }
 	]);
 	const heading = createElement("h3", `first last`, [
@@ -136,11 +136,11 @@ export function generateModal() {
 }
 
 // On card click, populate the modal and show it
-export function populateModal(e, result) {
+export function populateModal(e, profile) {
 
     // Deconstruct some variables
     const { modalDiv, modalImg, modalName, modalEmail, modalCity, modalTel, modalAddress, modalDOB} = modalDOM;
-	const { index, name, location, email, dob, phone, picture } = result;
+	const { index, name, location, email, dob, phone, picture } = profile;
 	const { street, city, state, postcode } = location;
 
 	// Insert new profile details, after ensuring the detail is present
