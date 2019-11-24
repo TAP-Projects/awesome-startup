@@ -35,12 +35,9 @@ export function generateForm() {
 
         //!NOTE: Also, I should add a keyup listener with debounce to the search function
 
-        // Hide the cards
-        // .children returns a collection, hence the for loop below. I'm using it because I think it's faster than using querySelectorAll('.card');
-        const cards = document.getElementById('gallery').children;
-        for(let i=0; i<cards.length; i++){
-            cards[i].setAttribute('style', 'display:none');
-        }
+        // Remove all cards
+        const cards = document.getElementById('gallery').children.remove();
+        
         // Get the query string
         const query = e.target.firstElementChild.value.toLowerCase();
         console.log("The query is: ", query);
