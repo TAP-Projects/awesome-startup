@@ -1,4 +1,4 @@
-import { fetchData } from "./helpers.js";
+import { fetchData, indexData } from "./helpers.js";
 import { generateForm } from "./search.js";
 import { generateCard } from "./card.js";
 import { generateModal, populateModal } from "./modal.js";
@@ -34,17 +34,9 @@ export const cardNodes = [];
 fetchData(
 	"https://randomuser.me/api/1.3/?format=json&results=12&nat=us&exc=login,registered"
 )
-	.then(indexData)
+	// The data argument to indexData is the holder defined on line 29
+	.then((json)=>indexData(json,data))
 	.then(displayProfiles);
-
-// Index data
-function indexData(json) {
-	// Set data to parsed results
-	data = json.results;
-	// And add an index
-	data.forEach((profile, index) => (profile.index = index));
-	return data;
-}
 
 // Display profiles
 // displayProfile takes an array of profile objects and loop over it to generate profile cards, attaching a click listener to each. On click, we call populateModal, passing in the card, which we'll use to populate the modal.
@@ -55,6 +47,4 @@ export function displayProfiles(data) {
 		// We populate the cardNodes array just once on the initial call to displayProfiles
 		if (cardNodes.length < 12) cardNodes.push(cardNode);
 	});
-	console.log("The cardNodes array: ", cardNodes)
 }
-console.log("The cardNodes array, before the cards nodes are built: ", cardNodes)

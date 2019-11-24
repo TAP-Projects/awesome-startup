@@ -36,14 +36,12 @@ export function generateForm() {
 
         // Get the query string
         const query = document.getElementById('search-input').value.toLowerCase().trim();
-        console.log("The query is: ", query);
 
         // Get ready for results
         let matches;
         // If there's a query string, then map the data, returning profiles that include the query string
         if(query.length > 0){
             matches = data.map( profile => Object.values(profile).join('').includes(query) ? profile : null );
-            console.log("matches is: ", matches);
             // Display the valid matches, filtering out nulls. NOTE: It's easier to just recreate the cards than to try to hide the non-matches and then display them again
             displayProfiles(matches.filter(match=>match));
         } else {

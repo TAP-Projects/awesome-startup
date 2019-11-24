@@ -33,3 +33,13 @@ function checkStatus(response) {
 		return Promise.reject(new Error(response.statusText));
 	}
 }
+
+
+// indexData takes the resolved parsed json and an empty holder. It stores its results property in the holder. It iterates over the holder, adding an index to each object in the results array
+export function indexData(json, dataHolder) {
+	// Set data to parsed results
+	dataHolder = json.results;
+	// And add an index
+	dataHolder.forEach((item, index) => (item.index = index));
+	return dataHolder;
+}
