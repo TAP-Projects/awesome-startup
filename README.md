@@ -16,7 +16,7 @@ Users can also search for an employee, from among the displayed employees. As th
 
 ## Running the App Locally
 
-
+Previously, I wrote this app using modules. However, using modules can cause all sorts of CORS and MIME type errors if a developer attempts to open the app from their file system, rather than opening it from a local server. Consequently, I've created an app-no-modules.js file containing the full script. However, if you'd like to see what the app looked like using modules, please feel free to check out the 'archive' folder.
 
 ## Issues
 
