@@ -14,6 +14,10 @@ From the modal, users can click on the 'x' in the upper right corner to close th
 
 Users can also search for an employee, from among the displayed employees. As the user types, the list of displayed employees will update to show only matching employees. If no employee matches the search query, an error message will appear. 
 
+## Running the App Locally
+
+
+
 ## Issues
 
 Please report any issues here: https://github.com/julianjohannesen/p5-public-api-request/issues
